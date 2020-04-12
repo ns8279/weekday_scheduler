@@ -1,154 +1,111 @@
+//TA Joey advised to use let and const instead of var
+const containerEl = $('.container')
+let rowEl; //Rows for each our of the day 
+const hoursPerDay = 10;
+let currentTimeEl;
+let time = [];
+let hourColEl;
+let inputDescEl;
+let saveBtn;
+let saveColEl;
+let descColEl;
+let index = [];
+
 //setting up today's date and displaying it on the page
 var todayEl = moment().format("MMMM Do YYYY");
-    console.log(todayEl);
 $("#currentDay").append(todayEl);
 
-//get the number of hours in a workday
-var hoursPerDay = 10;
-let time = [];
-var timeInDay = () => {
+//get the number of hours in a work day
+const timeInADay = () => {
     var formattedTime = [];
     time = formattedTime;
-    for(i =0; i < hoursPerDay; i++) {
+    for (i = 0; i < hoursPerDay; i++) {
         var thatTime = (10 + i);
-        formattedTime.push(moment().startOf('day').add(thatTime, 'hours').format("hh:mm A"));
+        formattedTime.push((moment().startOf('day').add(thatTime, 'hours').format("HH:mm A")));
     }
+
 }
 
-//render the to do lists
-var index=[];
-var rowEl;
-var hourColEl;
-var descColEl;
-var saveColEl;
-var inputDescEl;
-var saveBtn;
-var containerDivEl = $(".container");
-var saveBtnIcon;
-var currentTimeEl;
+//render calendar
+const renderCalendar = () => {
+    //
+    for (i = 0; i < hoursPerDay; i++) {
 
+        //dynamically rendering the to do tasks
+        rowEl = $('<div>').attr("class", "row");
+        hourColEl = $('<div>' + time[i] + '</div>').attr("class", "col-lg-1 hour");
+        descColEl = $('<div>').attr("class", "col-lg-10");
 
-
-var renderCalender = () => {
-    for (var i =0; i < hoursPerDay; i++) {
-        //dynamically create the container elements with bootstrap classes
-        rowEl = $('<div>')
-        .attr("class", "row");
-
-        hourColEl = $('<div>' + time[i] + '</div>')
-        .attr("class", "col-lg-1 hour");
-
-        descColEl = $('<div>')
-        .attr("class", "col-lg-10");
-        
-
-        saveColEl = $('<div>')
-        .attr("class", "col-lg-1");
-        //create a button for save
-        saveBtn = $("<button>").attr("class", "saveBtn")
-        .attr("type", "submit").attr("id", time[i]).text("Save");
-        
-
-        //create a button to clear the task
-        // clearBtn = $("<button>").attr("class", "clearBtn")
-        // .attr("type", "submit").attr("id", time[i]).text("Clear Task");
-
-        //description Element needs a textarea for input
-        inputDescEl =  $('<textarea>').attr("value", "")
-                    .attr("class", "description").attr("id", time[i]);
-        
-
-        //update the index with the id of the description
+        //input element for description 
+        inputDescEl = $('<textarea>').attr('value', "").attr("class", "description").attr("id", time[i]);
+        //push the id 
         index.push(inputDescEl.attr("id"));
 
-        //apend the created elements to the parent elemet
-            //apend the hour, decription and save elements to the row element
-            rowEl.append(hourColEl);
-            rowEl.append(descColEl);
-            rowEl.append(saveColEl);
+        //save button 
+        saveColEl = $('<div>').attr("class", "col-lg-1")
+        saveBtn = $('<button>').attr("class", "saveBtn").attr("id", time[i]).attr("type", "submit").text("Save");
+       // $(".saveBtn").html('<img src="/open-iconic/svg/check.svg">');
+        
+        //append the input element to the Description element
+        descColEl.append(inputDescEl)
+        //append the save button to the save element
+        saveColEl.append(saveBtn);
 
-            //append the buttons to the save element
-            saveColEl.append(saveBtn);
-            //saveColEl.append(saveBtnIcon);
-            
+        //append the hour, description and save element to the row
+        rowEl.append(hourColEl);
+        rowEl.append(descColEl);
+        rowEl.append(saveColEl);
 
-            //apend the textarea to the description element
-            descColEl.append(inputDescEl);
-
-            //append the row element to the main container
-            containerDivEl.append(rowEl);
-
-     }
-     $(document).on("click", ".saveBtn", saveTask);
-    //  $(document).on("click", ".clearBtn", clearTask);
-
+        //append the row to the container 
+        containerEl.append(rowEl);
+    }
+    $(document).on("click", ".saveBtn", saveTask);
+    
 }
 
-//function to determine the current time
-var currentTime = () => {
-    currentTimeEl = moment().format("hh:mm A");
-     //console.log()
-
-     var timeArea = $('textarea').get();
-     let getTask;
-     timeArea.forEach(taskDesc => {
-        var timeId = parseInt(taskDesc.id);
-        console.log(taskDesc);
-
-        //to check if the time is past
-        if(parseInt(currentTimeEl) > timeId) {
-            taskDesc.classList.value = "description past";
-            getTask = localStorage.getItem(taskDesc.id);
-            taskDesc.value = getTask;
-
-        }//check if the time is future
-        else if (parseInt(currentTimeEl) < timeId) {
-            taskDesc.classList.value = "description future";
-            getTask = localStorage.getItem(taskDesc.id);
-            taskDesc.value = getTask;
-        }//check if it is the present time
-        else {
-            console.log(" future time  " + parseInt(taskDesc));
-            taskDesc.classList.value = "description present";
-            taskDesc.value = getTask;
-        }
-
-
-     });
-};
-// Current time function Ends here//
-
-//function to save task
-var saveTask = function(event) {
-    event.preventDefault();
-
-    var task = $(this).parent().parent()
-    .find(".description", ['textarea'])[0].value;
-
-    var time = $(this).parent().parent()
-    .find(".description", ['textarea'])[0].id;
-
-    console.log(task);
+function saveTask (event) {
+    event.preventDefault()
+    var taskInput = $(this).parent().parent().find(".description", ['textarea'])[0].value
+    var time = $(this).parent().parent().find(".description", ['textarea'])[0].id;
     console.log(time);
-
-    localStorage.setItem(time,task);
+    console.log(taskInput);
+    localStorage.setItem(time, taskInput);
 }
 
-//function to clear task
-// var clearTask = function() {
-//     $(this).parent().parent()
-//     .find(".description", ['textarea'])[0].value = "";
+//determine current time
+const currentTime = () => {
+    currentTimeEl = moment().format("HH:mm A");
+    const timeArea = $('textarea').get();
+    let getTask;
+    timeArea.forEach(timeDesc => {
+       var timeId = parseInt(timeDesc.id);
+         
+        //check if the time is past
+         if (parseInt(currentTimeEl) > timeId) {
+             timeDesc.classList.value = "description past";
+             getTask = localStorage.getItem(timeDesc.id)
+             console.log(getTask);
+            timeDesc.value = getTask;
+        }
+        //check if the time is future
+         else if (parseInt(currentTimeEl) < timeId) {
+             timeDesc.classList.value = "description future";
+             getTask = localStorage.getItem(timeDesc.id)
+            console.log(getTask);
+             timeDesc.value = getTask;
+         }
+         //check if it is the current time
+         else {
+            timeDesc.classList.value = "description present";
+            getTask = localStorage.getItem(timeDesc.id)
+            //console.log(getTask);
+           timeDesc.value = getTask;
+        } 
+    });
+};
 
-//     var time = $(this).parent().parent()
-//     .find(".description", ['textarea'])[0].id;
 
-//     console.log(task);
-//     console.log(time);
-
-//     localStorage.setItem(time,task);
-// }
-
-renderCalender();
-timeInDay();
+timeInADay();
+renderCalendar();
+console.log(time);
 currentTime();
-
