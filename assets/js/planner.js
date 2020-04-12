@@ -12,7 +12,7 @@ let descColEl;
 let index = [];
 
 //setting up today's date and displaying it on the page
-var todayEl = moment().format("MMMM Do YYYY");
+var todayEl = "Today's Date is " + moment().format("MMMM Do YYYY");
 $("#currentDay").append(todayEl);
 
 //get the number of hours in a work day
@@ -43,11 +43,14 @@ const renderCalendar = () => {
 
         //save button 
         saveColEl = $('<div>').attr("class", "col-lg-1")
-        saveBtn = $('<button>').attr("class", "saveBtn").attr("id", time[i]).attr("type", "submit").text("Save");
-       // $(".saveBtn").html('<img src="/open-iconic/svg/check.svg">');
+        saveBtn = $('<button>').attr("class", "saveBtn").attr("id", time[i]).attr("type", "submit").text("💾");
+        // saveBtn = $("<span>")
+        //  .addClass("oi oi-check")
+        //  .text("Save")
+        // $(".saveBtn").html('<img src="/open-iconic/svg/check.svg">');
         
         //append the input element to the Description element
-        descColEl.append(inputDescEl)
+        descColEl.append(inputDescEl);
         //append the save button to the save element
         saveColEl.append(saveBtn);
 
