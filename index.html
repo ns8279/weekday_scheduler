@@ -18,20 +18,20 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Work Day Scheduler</title>
   </head>
 
   <body>
-    <header class="jumbotron border-bottom ">
+    <header class="jumbotron">
       <h1 class="display-3 text-center">Work Day Scheduler</h1>
       <p class="lead text-center">A simple calendar app for scheduling your work day</p>
-      <p id="currentDay" class="lead text-center"></p>
+      <p id="currentDay" class="lead"></p>
     </header>
     <div class="container">
       <div class = "row">
-        <div class = "col-lg-12 col-md-6 col-sm-3">
-          <h2 class = "today"></h2>
+        <div class = "col-lg-12">
+          <h2 class = "today text-center"></h2>
         </div>
       </div>
       <!-- Timeblocks go here -->
@@ -39,5 +39,6 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/planner.js"></script>
   </body>
 </html>
