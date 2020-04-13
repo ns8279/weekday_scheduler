@@ -16,8 +16,8 @@ https://ns8279.github.io/weekday_scheduler/
 
 # Preview of the Application
 ![Alt text](./assets/images/preview_1.png?raw=true "Title")
-# Preview in smaller screen
-![Alt text](./assets/images/small_screen.png?raw=true "Title")
+
+
 
 # Contributors
 Made by Nirupama Sundararaman for UC Berkeley Bootcamp 
