@@ -33,8 +33,8 @@ const renderCalendar = () => {
 
         //dynamically rendering the to do tasks
         rowEl = $('<div>').attr("class", "row");
-        hourColEl = $('<div>' + time[i] + '</div>').attr("class", "col-lg-1 col-sm-2 hour");
-        descColEl = $('<div>').attr("class", "col-lg-10 col-sm-8");
+        hourColEl = $('<div>' + time[i] + '</div>').attr("class", "col-lg-1 col-sm-2 col-xs-2 hour");
+        descColEl = $('<div>').attr("class", "col-lg-10 col-sm-8 col-xs-8");
 
         //input element for description 
         inputDescEl = $('<textarea>').attr('value', "").attr("class", "description").attr("id", time[i]);
@@ -42,7 +42,7 @@ const renderCalendar = () => {
         index.push(inputDescEl.attr("id"));
 
         //save button 
-        saveColEl = $('<div>').attr("class", "col-lg-1 col-sm-2")
+        saveColEl = $('<div>').attr("class", "col-lg-1 col-sm-2 col-xs-2")
         saveBtn = $('<button>').attr("class", "saveBtn").attr("id", time[i]).attr("type", "submit").text("💾");
         // saveBtn = $("<span>")
         //  .addClass("oi oi-check")
